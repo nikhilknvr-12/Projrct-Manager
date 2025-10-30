@@ -1,7 +1,17 @@
-import express from 'express';
-import cors from 'cors';
+import express from 'express'
+import cors from 'cors'
+import dotenv from 'dotenv'
+import mongoose from 'mongoose'
 
-const app = express();
+dotenv.config()
+mongoose.connect(process.env.MONGO_URI)
+.then(() => {
+  console.log('Connected to MongoDB')
+})
+.catch((error) => {
+  console.log('Error connecting to MongoDB:', error)
+})
+const app = express()
 
 // Middleware to handle cors
 app.use(cors(
@@ -10,9 +20,11 @@ app.use(cors(
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
   }
-));
+))
 
+//Middleware to parse JSON bodies
+app.use(express.json())
 
 app.listen(3000, () => {
-  console.log('Server is running on port 3000');
-});
+  console.log('Server is running on port 3000')
+})
