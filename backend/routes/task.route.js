@@ -1,6 +1,6 @@
 import express from 'express'
 import { adminOnly, verifyToken } from '../utils/verifyUser.js'
-import { createTask, getTaskById, getTasks, updateTask } from '../controller/task.controller.js'  
+import { createTask, deleteTask, getTaskById, getTasks, updateTask } from '../controller/task.controller.js'  
 
 const router= express.Router()
 
@@ -9,5 +9,6 @@ router.get("/", verifyToken, getTasks)
 
 router.get("/:id",verifyToken, getTaskById)
 router.put("/:id", verifyToken, updateTask)
+router.delete("/:id", verifyToken, adminOnly, deleteTask )
 
 export default router
